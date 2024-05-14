@@ -11,12 +11,12 @@ namespace EDCCC.Infraestructure.Persistence
     public class EDCDbContext : DbContext
     {
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Data Source=localhost; Initial Catalog=EDCCC;Integrated Security=True")
-        //        .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, Microsoft.Extensions.Logging.LogLevel.Information)
-        //        .EnableSensitiveDataLogging();
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=localhost; Initial Catalog=EDCCC;Integrated Security=True")
+                .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, Microsoft.Extensions.Logging.LogLevel.Information)
+                .EnableSensitiveDataLogging();
+        }
 
 
         public EDCDbContext(DbContextOptions<EDCDbContext> options) : base(options)
@@ -45,6 +45,8 @@ namespace EDCCC.Infraestructure.Persistence
 
         public DbSet<Customers>? customers { get; set; }
         public DbSet<TypeAccount>? typeAccounts { get; set; }
+
+        public DbSet<TransactionType>? transactionType { get; set; }
         public DbSet<Account>? accounts { get; set; }
 
         public DbSet<CCard>? ccards { get; set; }

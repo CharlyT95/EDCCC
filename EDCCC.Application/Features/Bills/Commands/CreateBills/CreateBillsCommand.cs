@@ -14,7 +14,7 @@ namespace EDCCC.Application.Features.Bills.Commands.CreateBills
         public decimal Amount { get; set; }
 
         public int CCardId { get; set; }
-
+        public int TransactionTypeId { get; set; }
 
     }
 }

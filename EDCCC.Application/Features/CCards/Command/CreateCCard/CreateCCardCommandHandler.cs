@@ -28,7 +28,7 @@ namespace EDCCC.Application.Features.CCards.Command.CreateCCard
         public async Task<int> Handle(CreateCCardCommand request, CancellationToken cancellationToken)
         {
             var CCardEntity = _mapper.Map<CCard>(request);
-            _unitOfWork.Repository<CCard>().AddAsync(CCardEntity);
+            _unitOfWork.Repository<CCard>().AddEntity(CCardEntity);
             var result = await _unitOfWork.Complete();
 
             if (result == 0)

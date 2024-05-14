@@ -21,5 +21,9 @@ namespace EDCCC.Application.Contracts.Persistence
 
         Task<T> DeleteAsync(T entity);
 
+        void AddEntity(T entity);
+
+        void UpdateEntity(T entity);
+
     }
 }

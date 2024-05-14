@@ -19,9 +19,9 @@ namespace APICC.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{Name}", Name = "GetCCards")]
+        [HttpGet(Name = "GetCCards")]
         [ProducesResponseType(typeof(IEnumerable<CCardsVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<CCardsVm>>> GetCustomerByName()
+        public async Task<ActionResult<IEnumerable<CCardsVm>>> GetCCards()
         {
             var query = new GetCCardsListQuery();
             var ccard = await _mediator.Send(query);

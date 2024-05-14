@@ -24,7 +24,7 @@ namespace EDCCC.Application.Features.CCards.Queries.GetCCardsList
         public async Task<List<CCardsVm>> Handle(GetCCardsListQuery request, CancellationToken cancellationToken)
         {
             var CCardList = await _unitOfWork.Repository<CCard>().GetAllAsync();
-
+            
 
             return _mapper.Map<List<CCardsVm>>(CCardList.ToList());
 

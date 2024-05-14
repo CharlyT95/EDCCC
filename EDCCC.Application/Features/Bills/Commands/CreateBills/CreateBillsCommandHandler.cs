@@ -23,7 +23,7 @@ namespace EDCCC.Application.Features.Bills.Commands.CreateBills
         public async Task<int> Handle(CreateBillsCommand request, CancellationToken cancellationToken)
         {
             var billEntity = _mapper.Map<Bill>(request);
-            _unitOfWork.Repository<Bill>().AddAsync(billEntity);
+            _unitOfWork.Repository<Bill>().AddEntity(billEntity);
             var result = await _unitOfWork.Complete();
 
             if (result == 0)

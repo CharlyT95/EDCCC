@@ -27,7 +27,7 @@ namespace EDCCC.Application.Features.Accounts.Commands.CreateAccounts
         public async Task<int> Handle(CreateAccountsCommand request, CancellationToken cancellationToken)
         {
             var AccountEntity = _mapper.Map<Account>(request);
-            _unitOfWork.Repository<Account>().AddAsync(AccountEntity);
+            _unitOfWork.Repository<Account>().AddEntity(AccountEntity);
             var result = await _unitOfWork.Complete();
 
             if (result == 0)

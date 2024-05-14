@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EDCCC.Application.Behaviours
 {
-    public class UnhandledExceptionBehavior<Trequest, Tresponse> : IPipelineBehavior<Trequest, Tresponse> where Trequest : IRequest<Tresponse>
+    public class UnhandledExceptionBehavior<Trequest, Tresponse> : IPipelineBehavior<Trequest, Tresponse>
     {
 
         private readonly ILogger<Trequest> _logger;

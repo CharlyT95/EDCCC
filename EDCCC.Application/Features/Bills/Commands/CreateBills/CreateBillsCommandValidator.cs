@@ -11,7 +11,7 @@ namespace EDCCC.Application.Features.Bills.Commands.CreateBills
     {
         public CreateBillsCommandValidator()
         {
-            RuleFor(b => b.Amount).NotNull().WithMessage("{Amount} no puede ser nulo").LessThan(0).WithMessage("Amount no puede ser menor a 0");
+            RuleFor(b => b.Amount).NotNull().WithMessage("{Amount} no puede ser nulo");
             RuleFor(b => b.Description).NotNull().WithMessage("{Description} no puede ser nulo").NotEmpty().WithMessage("{Description} debe contener descripcion");
             RuleFor(b => b.CCardId).NotNull().WithMessage("{CCardId} NO PUEDE SER NULO");
         }

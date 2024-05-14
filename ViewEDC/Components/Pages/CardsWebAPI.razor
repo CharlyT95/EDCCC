@@ -1,0 +1,104 @@
+﻿@page "/call-web-api"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using Models
+@inject IHttpClientFactory ClientFactory
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+<h1>CREDIT CARDS BILLS</h1>
+@if (getCardsError || cards is null)
+{
+    <p>Something wrong... Try again</p>
+}
+else
+{
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <input type="text" id="search" placeholder="Type to search..." />
+    <table class="table table-hover" id="table">
+        <tbody>
+            <tr>
+                <th>Credit Card Number</th>
+                <th>Limit</th>
+                <th>Due Date</th>
+                <th colspan="5"><center>OPTIONS</center></th>
+            </tr>
+        </tbody>
+        @foreach (var cc in cards)
+        {
+            <tr>
+                <td> @Numero(@cc.cNumber)</td>
+                <td>@cc.limit</td>
+                <td>@cc.dueDate</td>
+                <td>
+                <th> <button type="button" class="btn btn-secondary">DETALLES</button> </th>
+                <th> <button type="button" class="btn btn-primary">REGISTRAR COMPRA</button> </th>
+                <th> <button type="button" class="btn btn-success">REGISTRAR PAGO</button> </th>
+                </td>
+            </tr>
+        }
+    </table>
+
+}
+
+
+
+
+@code {
+    private IEnumerable<GetCards>? cards = [];
+    private bool getCardsError;
+    private bool shouldRender;
+
+    protected override bool ShouldRender() => shouldRender;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get,
+            "http://localhost:5274/api/v1/CCard");
+        request.Headers.Add("Accept", "application/vnd.github.v3+json");
+        request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
+
+        var client = ClientFactory.CreateClient();
+
+        var response = await client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            cards = await JsonSerializer.DeserializeAsync
+                <IEnumerable<GetCards>>(responseStream);
+        }
+        else
+        {
+            getCardsError = true;
+        }
+
+        shouldRender = true;
+    }
+
+
+    public static string Numero(string CNumber)
+    {
+        var Num = new string(CNumber.Reverse().Take(4).Reverse().ToArray());
+       string actual = "**** **** **** " + Num;
+       return actual;
+    }
+
+
+  
+}
+ 

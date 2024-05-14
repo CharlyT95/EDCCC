@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebMVCEDCCC.Models.CCard>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="col-4">
+    <input type="text" id="search" placeholder="Type to search..." class="form-control" />
+    </div>
+<table class="table table-hover" id="table">
+    <thead>
+        <tr>
+            <th>Credit Card Number</th>
+            <th>Limit</th>
+            <th>Due Date</th>
+            <th colspan="5"><center>OPTIONS</center></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var cc in Model)
+    {
+        <tr>
+            <td> @cc.cNumber</td>
+            <td>@cc.limit</td>
+            <td>@cc.dueDate</td>
+            <td>
+            <th>
+                <a asp-controller="Bill" asp-action="Index"
+                       asp-route-id="@cc.id" class="btn btn-secondary">
+                    DETALLES
+                </a>
+            </th>
+            <th> 
+                    <a asp-controller="Purchase" asp-action="Index"
+                       asp-route-id="@cc.id" class="btn btn-primary">
+                        REGISTRAR COMPRA
+                    </a>
+            </th>
+            <th> 
+                    <a asp-controller="Payment" asp-action="Index"
+                       asp-route-id="@cc.id" class="btn btn-success">
+                        REGISTRAR PAGO
+                    </a>
+            </th>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#table > tbody > tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+    </script>
+}
+

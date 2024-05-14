@@ -32,6 +32,13 @@ namespace EDCCC.Infraestructure.Persistence
                 _logger.LogInformation("Registrando Tipos de cuenta");
             }
 
+            if (!_context.transactionType!.Any())
+            {
+                _context.transactionType!.AddRange(GetPreconfiguredTransactionTypes());
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Registrando tipos de transaccion");
+            }
+
             if (!_context.accounts!.Any())
             {
                 _context.accounts!.AddRange(GetPreconfiguredAccount());
@@ -78,6 +85,15 @@ namespace EDCCC.Infraestructure.Persistence
             };
         }
 
+        private static IEnumerable<TransactionType> GetPreconfiguredTransactionTypes()
+        {
+            return new List<TransactionType>
+            {
+                new TransactionType { Name="CARGO"},
+                new TransactionType { Name="ABONO"}
+            };
+        }
+
         private static IEnumerable<Account> GetPreconfiguredAccount()
         {
             return new List<Account>
@@ -90,25 +106,34 @@ namespace EDCCC.Infraestructure.Persistence
 
         private static IEnumerable<CCard> GetPreconfiguredCCards() 
         {
-
+            System.DateTime date1 = new System.DateTime(2025, 3, 10, 2, 15, 10);
+            System.DateTime date2 = new System.DateTime(2028, 7, 15, 6, 30, 20);
             return new List<CCard>
             {
-                new CCard { AccountId=1,CNumber="0987 6534 6789 0012",InterestRate=0.36,Limit=2000.00},
-                new CCard { AccountId=2,CNumber="0567 8900 4511 2345",InterestRate=0.24,Limit=4000.00}
+                new CCard { AccountId=1,CNumber="0987653467890012",InterestRate=0.36,Limit=2000.00, DueDate=date1},
+                new CCard { AccountId=2,CNumber="0567890045112345",InterestRate=0.24,Limit=4000.00,DueDate=date2}
             };
         }
+
 
 
         private static IEnumerable<Bill> GetPreconfiguredBills()
         {
+            System.DateTime date1 = new System.DateTime(2024, 3, 4, 2, 15, 10);
+            System.DateTime date2 = new System.DateTime(2024, 1, 1, 2, 15, 10);
+            System.DateTime date3 = new System.DateTime(2024, 2, 2, 2, 15, 10);
+            System.DateTime date4 = new System.DateTime(2024, 3, 3, 2, 15, 10);
+
             return new List<Bill>
             {
-                new Bill {CCardId=1,Amount=15.00,Description="ADOC ZAP/2 503QWERTY" },
-                new Bill {CCardId=1,Amount=200.00,Description="Super selecto SOYSS1101" },
-                new Bill {CCardId=1,Amount=25.99,Description="EARPHONES SIMAN 120124" },
-                new Bill {CCardId=2,Amount=299.99,Description="NINTENDO SWITCH ZDSOY" }
+                new Bill {CCardId=1,Amount=15.00,Description="ADOC ZAP/2 503QWERTY", TransactionTypeId=1, Date= date1},
+                new Bill {CCardId=1,Amount=200.00,Description="Super selecto SOYSS1101",TransactionTypeId=1 ,Date= date2},
+                new Bill {CCardId=1,Amount=25.99,Description="EARPHONES SIMAN 120124",TransactionTypeId=1 ,Date= date3},
+                new Bill {CCardId=2,Amount=299.99,Description="NINTENDO SWITCH ZDSOY",TransactionTypeId=1,Date= date4 }
             };
         }
+
+
 
         
 

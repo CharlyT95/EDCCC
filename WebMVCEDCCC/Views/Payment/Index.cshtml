@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "New Payment";
+}
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+</head>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">NEW PAYMENT</h2>
+            <form asp-action="Payment" asp-asp-controller="Payment" method="post">
+                <div class="form-group">
+                    <label for="fecha">DATE</label>
+                    <input type="date" class="form-control" id="paymentDate" name="paymentDate">
+                </div>
+                <div class="form-group">
+                    <label for="numero">AMOUNT</label>
+                    <input type="text" class="form-control" id="paymentAmount" name="paymentAmount">
+                </div>
+                <div class="form-group">
+                    <label for="texto">DESCRIPTION</label>
+                    <input type="text" class="form-control" id="desc" name="desc">
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Sent Payment</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-dark" type="button">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<blockquote class="blockquote text-center">
+    <p class="mb-0"> @ViewBag.Message </p>
+    <footer class="blockquote">@ViewBag.Message2 </footer>
+</blockquote>
+
+@section Scripts
+{
+    <script>
+        onload = function () {
+            var ele = document.querySelectorAll('#paymentAmount')[0];
+            ele.onkeypress = function (e) {
+                if (isNaN(this.value + String.fromCharCode(e.charCode)))
+                    return false;
+            }
+            ele.onpaste = function (e) {
+                e.preventDefault();
+            }
+        }
+    </script>
+
+}

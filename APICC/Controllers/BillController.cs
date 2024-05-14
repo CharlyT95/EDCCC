@@ -30,9 +30,10 @@ namespace APICC.Controllers
         }
 
 
-        [HttpGet("{creditCardId}", Name = "GetBillsListByCCard")]
+        [HttpGet]
+        [Route("[action]")]
         [ProducesResponseType(typeof(IEnumerable<BillVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<BillVm>>> GetTransactionsByTypeAndCreditCard(int CCardId)
+        public async Task<ActionResult<IEnumerable<BillVm>>> GetBillsListByCCard(int CCardId)
         {
             var query = new GetBillsListByCCardQuery(CCardId);
             var bills = await _mediator.Send(query);

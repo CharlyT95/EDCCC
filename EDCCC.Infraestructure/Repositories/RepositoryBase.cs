@@ -95,5 +95,16 @@ namespace EDCCC.Infraestructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void AddEntity(T entity)
+        {
+            _context.Set<T>().Add(entity);
+        }
+
+        public void UpdateEntity(T entity)
+        {
+            _context.Set<T>().Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
     }
 }

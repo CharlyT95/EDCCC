@@ -13,7 +13,7 @@ namespace EDCCC.Infraestructure
         public static IServiceCollection AddInfraestructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<EDCDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("ConnectionString"))
+                options.UseSqlServer(configuration.GetConnectionString("ConnectionString")), ServiceLifetime.Transient
             );
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

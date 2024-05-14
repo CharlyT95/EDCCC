@@ -23,7 +23,7 @@ namespace EDCCC.Application.Behaviours
 
                var errorsF =  validationResults.SelectMany(s => s.Errors).Where(e => e != null).ToList();
 
-                if (errorsF.Count != 0)
+                if (errorsF.Count() != 0)
                 {
                     throw new ValidationException(errorsF);
                 }

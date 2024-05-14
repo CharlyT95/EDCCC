@@ -37,7 +37,7 @@ namespace EDCCC.Application.Features.CCards.Command.UpdateCCard
 
             _mapper.Map(request, CCardUpdate, typeof(UpdateCCardCommand), typeof(CCard));
 
-            _unitOfWork.Repository<CCard>().UpdateAsync(CCardUpdate);
+            _unitOfWork.Repository<CCard>().UpdateEntity(CCardUpdate);
 
             await _unitOfWork.Complete();
 

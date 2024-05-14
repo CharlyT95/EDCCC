@@ -8,6 +8,9 @@ namespace EDCCC.Application.Features.CCards.Queries.GetCCardsList
 {
     public class CCardsVm
     {
+       
+
+        public int Id { get; set; }
         public string? CNumber { get; set; }
 
         public double? Limit { get; set; }
@@ -15,6 +18,9 @@ namespace EDCCC.Application.Features.CCards.Queries.GetCCardsList
 
         public DateTime DueDate { get; set; }
         public int AccountId { get; set; }
+
+
+      
 
     }
 }
